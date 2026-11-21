@@ -1,0 +1,22 @@
+name: APK Builder
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Build APK
+        uses: ArtemSBulgakov/buildozer-action@v1
+        id: buildozer
+        with:
+          command: buildozer android debug
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: package
+          path: output/*.apk
